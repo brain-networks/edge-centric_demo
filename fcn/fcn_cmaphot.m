@@ -1,4 +1,6 @@
 function cmaphot = fcn_cmaphot(len)
+% colormap used in paper
+
 if nargin == 0
     len = 256;
 end

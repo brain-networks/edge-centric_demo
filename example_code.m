@@ -54,6 +54,7 @@ figure, imagesc(ets(:,idx)',[-4,4]); hold on;
 for i = 1:length(dffidx)
     plot([0.5,T + 0.5],dffidx(i)*ones(1,2),'k');
 end
+title('Edge time series')
 
 %% visualize efc matrix
 
