@@ -75,12 +75,24 @@ cl(gl.cdata ~= 0) = enorm_rank(gl.cdata(gl.cdata ~= 0));
 
 cmap = fcn_cmaphot;
 
-figure, th = trisurf(sr.data{2}.data+1,sr.data{1}.data(:,1),sr.data{1}.data(:,2),sr.data{1}.data(:,3),cr);
-set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
-view(gca,3);axis equal;axis off;view(90,0);material dull;camlight headlight;lighting gouraud
-colormap(cmap);
+% based on if 'gifti' repo is in system path, sr and sl structures could be
+% different; thus, quick check here. 
+if isfield(sr,'data') 
+    figure, th = trisurf(sr.data{2}.data+1,sr.data{1}.data(:,1),sr.data{1}.data(:,2),sr.data{1}.data(:,3),cr);
+    set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
+    view(gca,3);axis equal;axis off;view(90,0);material dull;camlight headlight;lighting gouraud
+    colormap(cmap);
 
-figure, th = trisurf(sl.data{2}.data+1,sl.data{1}.data(:,1),sl.data{1}.data(:,2),sl.data{1}.data(:,3),cr);
-set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
-view(gca,3);axis equal;axis off;view(-90,0);material dull;camlight headlight;lighting gouraud
-colormap(cmap);
+    figure, th = trisurf(sl.data{2}.data+1,sl.data{1}.data(:,1),sl.data{1}.data(:,2),sl.data{1}.data(:,3),cr);
+    set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
+    view(gca,3);axis equal;axis off;view(-90,0);material dull;camlight headlight;lighting gouraud
+    colormap(cmap);
+else 
+    figure, th = trisurf(sr.faces,sr.vertices(:,1),sr.vertices(:,2),sr.vertices(:,3),cr);
+    set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
+    colormap(cmap); colorbar;
+
+    figure, th = trisurf(sl.faces,sl.vertices(:,1),sl.vertices(:,2),sl.vertices(:,3),cl);
+    set(th,'edgecolor','none'); axis image; set(gca,'clim',[min(enorm_rank),max(enorm_rank)]);
+    colormap(cmap); colorbar;
+end
